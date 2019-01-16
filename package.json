@@ -12,7 +12,10 @@
     "sails-hook-sockets": "^1.5.5",
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/socket.io-redis": "^5.2.0",
-    "@sailshq/lodash": "^3.10.3"
+    "@sailshq/lodash": "^3.10.3",
+    "async": "2.0.1",
+    "connect-flash": "^0.1.1",
+    "moment": "^2.23.0"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",

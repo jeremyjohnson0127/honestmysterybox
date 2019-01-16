@@ -13,6 +13,7 @@ module.exports.bootstrap = async function() {
 
   // Import dependencies
   var path = require('path');
+  sails.moment = require('moment');
 
   // This bootstrap version indicates what version of fake data we're dealing with here.
   var HARD_CODED_DATA_VERSION = 0;
@@ -60,7 +61,7 @@ module.exports.bootstrap = async function() {
 
   // By convention, this is a good place to set up fake data during development.
   await User.createEach([
-    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', amount: 0, isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
   ]);
 
   // Save new bootstrap version

@@ -1,0 +1,68 @@
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Boxes
+        <small>Add</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/boxes"> Boxes</a></li>
+        <li class="active">Add</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      
+
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Add box information</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+
+            <%- partial('../../../partials/flash') %>
+
+
+            <form role="form" method="post" action="/admin/boxes/addBox">
+              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Name</label>
+                  <input type="text" class="form-control" id="Name" placeholder="Enter box name" name="name" required="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Price</label>
+                    <input type="text" class="form-control" id="Price" placeholder="Enter box price" name="price" required="">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Status</label>
+                  <select  name="status" class="form-control" style="width: 200px;">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </div>
+               
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+      </div>
+
+
+    </section>
+    <!-- /.content -->

@@ -24,9 +24,9 @@ module.exports = {
 
 
   fn: async function () {
-
+    console.log('is uperadmin-------------------------------------', this.req.me.isSuperAdmin);
     if (this.req.me) {
-      throw {redirect:'/welcome'};
+      throw {  redirect:  this.req.me.isSuperAdmin ? '/admin/dashboard' : "/welcome"  };
     }
 
     return {};
