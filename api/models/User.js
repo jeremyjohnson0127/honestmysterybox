@@ -18,26 +18,7 @@ module.exports = {
       unique: true,
       isEmail: true,
       maxLength: 200,
-      example: 'mary.sue@example.com'
-    },
-
-    emailStatus: {
-      type: 'string',
-      isIn: ['unconfirmed', 'change-requested', 'confirmed'],
-      defaultsTo: 'confirmed',
-      description: 'The confirmation status of the user\'s email address.',
-      extendedDescription:
-`Users might be created as "unconfirmed" (e.g. normal signup) or as "confirmed" (e.g. hard-coded
-admin users).  When the email verification feature is enabled, new users created via the
-signup form have \`emailStatus: 'unconfirmed'\` until they click the link in the confirmation email.
-Similarly, when an existing user changes their email address, they switch to the "change-requested"
-email status until they click the link in the confirmation email.`
-    },
-
-    emailChangeCandidate: {
-      type: 'string',
-      isEmail: true,
-      description: 'A still-unconfirmed email address that this user wants to change to (if relevant).'
+      example: 'carol.reyna@microsoft.com'
     },
 
     password: {
@@ -51,9 +32,15 @@ email status until they click the link in the confirmation email.`
     fullName: {
       type: 'string',
       required: true,
-      description: 'Full representation of the user\'s name.',
+      description: 'Full representation of the user\'s name',
       maxLength: 120,
-      example: 'Mary Sue van der McHenst'
+      example: 'Lisa Microwave van der Jenny'
+    },
+
+    amount: {
+      type: 'string',
+      columnType: 'float',
+      required: true
     },
 
     isSuperAdmin: {
@@ -82,17 +69,6 @@ So, while this \`isSuperAdmin\` demarcation might not be the right approach fore
     passwordResetTokenExpiresAt: {
       type: 'number',
       description: 'A JS timestamp (epoch ms) representing the moment when this user\'s `passwordResetToken` will expire (or 0 if the user currently has no such token).',
-      example: 1502844074211
-    },
-
-    emailProofToken: {
-      type: 'string',
-      description: 'A pseudorandom, probabilistically-unique token for use in our account verification emails.'
-    },
-
-    emailProofTokenExpiresAt: {
-      type: 'number',
-      description: 'A JS timestamp (epoch ms) representing the moment when this user\'s `emailProofToken` will expire (or 0 if the user currently has no such token).',
       example: 1502844074211
     },
 
@@ -142,6 +118,35 @@ without necessarily having a billing card.`
       extendedDescription: 'To ensure PCI compliance, this data comes from Stripe, where it reflects the user\'s default payment source.'
     },
 
+    emailProofToken: {
+      type: 'string',
+      description: 'A pseudorandom, probabilistically-unique token for use in our account verification emails.'
+    },
+
+    emailProofTokenExpiresAt: {
+      type: 'number',
+      description: 'A JS timestamp (epoch ms) representing the moment when this user\'s `emailProofToken` will expire (or 0 if the user currently has no such token).',
+      example: 1502844074211
+    },
+
+    emailStatus: {
+      type: 'string',
+      isIn: ['unconfirmed', 'changeRequested', 'confirmed'],
+      defaultsTo: 'confirmed',
+      description: 'The confirmation status of the user\'s email address.',
+      extendedDescription:
+`Users might be created as "unconfirmed" (e.g. normal signup) or as "confirmed" (e.g. hard-coded
+admin users).  When the email verification feature is enabled, new users created via the
+signup form have \`emailStatus: 'unconfirmed'\` until they click the link in the confirmation email.
+Similarly, when an existing user changes their email address, they switch to the "changeRequested"
+email status until they click the link in the confirmation email.`
+    },
+
+    emailChangeCandidate: {
+      type: 'string',
+      description: 'The (still-unconfirmed) email address that this user wants to change to.'
+    },
+
     tosAcceptedByIp: {
       type: 'string',
       description: 'The IP (ipv4) address of the request that accepted the terms of service.',
@@ -155,6 +160,12 @@ without necessarily having a billing card.`
       example: 1502844074211
     },
 
+    cash: {
+      type: 'number',
+      description: 'A JS timestamp (epoch ms) representing the moment at which this user most recently interacted with the backend while logged in (or 0 if they have not interacted with the backend at all yet).',
+      example: 1502844074211
+    }
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -166,6 +177,84 @@ without necessarily having a billing card.`
     // n/a
 
   },
+  validationMessages: { //hand for i18n & l10n
+      emailAddress: {
+          required: 'Email is required',
+          email: 'Provide valid email address',
+          unique: 'Email address is already taken'
+      },
+      fullName: {
+          required: 'Fullname is required'
+      }
+  },
 
 
+  // Find all users
+  all: async function () {
+
+      return await User.find({sort: 'createdAt DESC'});
+
+  },
+
+  // Find user
+  get: async function (id) {
+
+      return await User.findOne({id: id});
+
+  },
+
+  // delete user
+  delete: async function (userId) {
+
+    if(userId)
+      return await User.destroy({ id: userId });
+    else
+      return false;
+
+  },
+
+  addUser: async function (req, res) { /* POSTed data */
+    var fullName = req.body ? req.body.fullName : undefined,
+      password = await sails.helpers.passwords.hashPassword(req.body.password);
+      status = req.body ? req.body.status : 0,
+      cash = req.body ? req.body.cash : 0,
+      emailAddress = req.body ? req.body.emailAddress : undefined;
+      id = req.body ? req.body.id : false;
+    //technically - once policies in place, this if can be removed as this action couldn't be called unless the user is logged in.
+    if (!req.me) {
+      return res.badRequest("Cannot add box without a logged in user");
+    } else {
+      return await User.create({
+        fullName: fullName,
+        password: password,
+        emailAddress: emailAddress,
+        status: status,
+        amount: cash
+      });
+    }
+  },
+
+  editUser: async function (req, res) { /* POSTed data */
+    var fullName = req.body ? req.body.fullName : undefined,
+      status = req.body ? req.body.status : 0,
+      cash = req.body ? req.body.cash : 0,
+      emailAddress = req.body ? req.body.emailAddress : undefined;
+      id = req.body ? req.body.id : false;
+      
+    if (!req.me) {
+      return res.badRequest("Cannot add post without a logged in user");
+    } else if (!id) {
+      return res.badRequest("Something went wrong, please try again later.");
+    } else {
+
+      return await User.update({
+        id: id
+      }).set({
+        fullName: fullName,
+        emailAddress: emailAddress,
+        status: status,
+        cash: cash
+      });
+    }
+  }
 };
