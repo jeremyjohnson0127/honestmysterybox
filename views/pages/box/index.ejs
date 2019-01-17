@@ -1,0 +1,23 @@
+<div id="index">
+    <div class="container">
+        <h1>Boxes</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>            
+            </thead>
+            <tbody>
+                <% boxes.forEach( box => { %>
+                    <tr>
+                        <td><%= box.name %></td>
+                        <td><%= box.price %></td>
+                        <td><a href="buyBox?id=<%= box.id %>">Buy</a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

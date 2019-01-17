@@ -1,0 +1,23 @@
+<div id="boxes">
+    <div class="container">
+        <h1>Boxes <a href="/admin/create-box" class="pull-right btn btn-primary">Create</a></h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>            
+            </thead>
+            <tbody>
+                <% boxes.forEach( box => { %>
+                    <tr>
+                        <td><%= box.name %></td>
+                        <td><%= box.price %></td>
+                        <td><a href="box?id=<%= box.id %>">View</a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -26,7 +26,12 @@ module.exports = {
   fn: async function () {
 
     if (this.req.me) {
-      throw {redirect:'/welcome'};
+      if(this.req.me.isSuperAdmin) {
+        throw {redirect:'/admin'};
+      }
+      else{
+        throw {redirect:'/welcome'};
+      }
     }
 
     return {};

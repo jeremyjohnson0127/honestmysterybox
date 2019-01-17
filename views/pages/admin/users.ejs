@@ -1,0 +1,25 @@
+<div id="users">
+    <div class="container">
+        <h1>Users <a href="/admin/create-user" class="pull-right btn btn-primary">Create</a></h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Cash</th>
+                <th>Action</th>
+            </tr>            
+            </thead>
+            <tbody>
+                <% users.forEach( user => { %>
+                <tr>
+                    <td><%= user.fullName %></td>
+                    <td><%= user.emailAddress %></td>                    
+                    <td><%= user.cash %></td>                    
+                    <td><a href="user/?id=<%= user.id %>">View</a></td>                    
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

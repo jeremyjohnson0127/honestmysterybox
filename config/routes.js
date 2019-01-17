@@ -33,6 +33,21 @@ module.exports.routes = {
   'GET /account/password':   { action: 'account/view-edit-password' },
   'GET /account/profile':    { action: 'account/view-edit-profile' },
 
+  'GET /box':                { action: 'box/index'},
+  'GET /box/create':         { action: 'box/create'},
+  'GET /admin':              { action: 'admin/index'},
+  'GET /admin/users':        { action: 'admin/users'},
+  'GET /admin/user':         { action: 'admin/user'},
+  'GET /admin/boxes':        { action: 'admin/boxes'},
+  'GET /admin/box':          { action: 'admin/box'},
+  'GET /admin/create-box':   { action: 'admin/create-box'},
+  'GET /admin/create-user':  { action: 'admin/create-user'},
+  'POST /admin/box-create':  { action: 'admin/box-create'},
+  'POST /admin/user-create': { action: 'admin/user-create'},
+  'GET /buyBox':             { action: 'order/create'},
+  'GET /orderpass':          { action: 'order/pass'},
+  'GET /orderfail':          { action: 'order/fail'},
+  'GET /orderfailcash':      { action: 'order/failcash'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -55,7 +70,7 @@ module.exports.routes = {
   '/api/v1/account/logout':                           { action: 'account/logout' },
   'PUT   /api/v1/account/update-password':            { action: 'account/update-password' },
   'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
-  'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
+  'PUT   /api/v1/account/update-billing-card':          { action: 'account/update-billing-card' },
   'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },

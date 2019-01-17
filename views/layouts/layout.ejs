@@ -50,6 +50,12 @@
         <div class="navbar-nav flex-row">
           <!-- LOGGED-IN NAVIGATION -->
           <% if(me) { %>
+            <% if(me.isSuperAdmin) { %>
+              <a href="/admin/boxes" class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0">Boxes</a>
+              <a href="/admin/users" class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0">Users</a>
+            <% } else { %>
+              <a href="/box" class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0">Boxes</a>
+            <% } %>
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Help</a>
           <!-- Only in desktop nav -->
           <div class="nav-item dropdown d-none d-sm-block">
