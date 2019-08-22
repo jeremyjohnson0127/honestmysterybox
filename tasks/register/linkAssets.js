@@ -1,6 +1,5 @@
 /**
  * `tasks/register/linkAssets.js`
- *
  * ---------------------------------------------------------------
  *
  * For more information see:
