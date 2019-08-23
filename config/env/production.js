@@ -9,7 +9,6 @@
  * ```
  * NODE_ENV=production node app
  * ```
- *
  * > If you're using git as a version control solution for your Sails app,
  * > this file WILL BE COMMITTED to your repository by default, unless you add
  * > it to your .gitignore file.  If your repository will be publicly viewable,
