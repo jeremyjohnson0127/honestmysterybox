@@ -149,6 +149,11 @@ without necessarily having a billing card.`
       moreInfoUrl: 'https://en.wikipedia.org/wiki/Know_your_customer'
     },
 
+    cash: {
+      type: 'number',
+      defaultsTo: 0.0,
+    },
+
     lastSeenAt: {
       type: 'number',
       description: 'A JS timestamp (epoch ms) representing the moment at which this user most recently interacted with the backend while logged in (or 0 if they have not interacted with the backend at all yet).',

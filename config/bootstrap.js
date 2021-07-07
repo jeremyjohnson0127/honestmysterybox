@@ -54,13 +54,21 @@ module.exports.bootstrap = async function() {
 
   // Since the hard-coded data version has been incremented, and we're running in
   // a "throwaway data" environment, delete all records from all models.
+  
   for (let identity in sails.models) {
     await sails.models[identity].destroy({});
   }//∞
 
   // By convention, this is a good place to set up fake data during development.
+
   await User.createEach([
-    { emailAddress: 'admin@example.com', fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc123') },
+    { emailAddress: 'admin@example.com', cash: 0.0, fullName: 'Ryan Dahl', isSuperAdmin: true, password: await sails.helpers.passwords.hashPassword('abc') },
+    { emailAddress: 'user@example.com', cash: 100.0, fullName: 'Richard Rahl', isSuperAdmin: false, password: await sails.helpers.passwords.hashPassword('abc1') },
+  ]);
+
+  await Box.createEach([
+    { name: 'box1', price: 10},
+    { name: 'box2', price: 12},
   ]);
 
   // Save new bootstrap version
